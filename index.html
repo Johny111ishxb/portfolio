@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salman Nawaz - Modern Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#fbbf24',
+                        secondary: '#f59e0b',
+                        accent: '#d97706',
+                        dark: '#0f172a',
+                        darker: '#020617'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 4s infinite',
+                        'gradient': 'gradient 15s ease infinite',
+                    },
+                    backgroundImage: {
+                        'mesh-gradient': 'radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%), radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --card-bg: rgba(195, 223, 223, 0.144);
+            --card-border: 0.5px solid rgb(202, 200, 200);
+        }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px #fbbf24; }
+            to { box-shadow: 0 0 30px #fbbf24, 0 0 40px #fbbf24; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: var(--card-border);
+            border-radius: 16px;
+        }
+        
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 6s ease infinite;
+            background-size: 400% 400%;
+        }
+        
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .hero-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e293b 100%);
+        }
+        
+        .dark {
+            color: rgb(255, 255, 255);
+        }
+ 
+        .dark .hero-head {
+            color: white;
+        }
+
+        .dark .typing-animation {
+            color: white;
+        }
+
+        .dark .hero-text{
+            color: white;
+        }
+
+        .hero-head,.hero-text, .typing-animation {
+            color : black;
+        }
+       
+        
+
+        
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+        
+        .tech-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .tech-icon:hover {
+            transform: translateY(-5px) rotate(5deg);
+            filter: brightness(1.2);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+        }
+        
+        .dark .nav-blur {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        
+        /* Theme toggle button styling */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(251, 191, 36, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        
+        .dark .theme-toggle {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+        
+        .dark .theme-toggle:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        
+        .theme-toggle i {
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover i {
+            transform: rotate(15deg);
+        }
+        
+        /* Mobile menu improvements */
+        .mobile-menu {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: none;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 1px;
+        }
+        
+        .dark .mobile-menu {
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mobile-menu-item {
+            display: block;
+            padding: 16px 24px;
+            margin: 0;
+            color: #475569;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .mobile-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .mobile-menu-item:hover {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            padding-left: 32px;
+        }
+        
+        .dark .mobile-menu-item {
+            color: #cbd5e1;
+            border-bottom-color: rgba(71, 85, 105, 0.3);
+        }
+        
+        .dark .mobile-menu-item:hover {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+        
+        .mobile-menu-cta {
+            margin: 16px 24px 24px 24px;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+            display: block;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .mobile-menu-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+        }
+        
+        .typing-animation {
+            border-right: 3px solid #fbbf24;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: #fbbf24; }
+        }
+        
+        .parallax-element {
+            transition: transform 0.1s ease-out;
+        }
+        
+        .skill-bar {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 8px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+        
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .contact-form {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b, #d97706);
+            border-radius: 16px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            z-index: -1;
+        }
+        
+
+        .icon-about{
+
+            background-color: #f59e0b;
+        }
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .floating-elements::before,
+        .floating-elements::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            border-radius: 50%;
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .floating-elements::before {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-elements::after {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 7s;
+        }
+        
+        .tech-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .dark .tech-tag {
+            background: #475569;
+            color: #cbd5e1;
+        }
+        
+        .filter-btn.active {
+            background: #fbbf24 !important;
+            color: white !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .project-card {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+            z-index: 1;
+            display: block;
+        }
+        
+        .project-card.animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        
+        .project-card.animate-in:nth-child(1) { animation-delay: 0.1s; }
+        .project-card.animate-in:nth-child(2) { animation-delay: 0.2s; }
+        .project-card.animate-in:nth-child(3) { animation-delay: 0.3s; }
+        .project-card.animate-in:nth-child(4) { animation-delay: 0.4s; }
+        .project-card.animate-in:nth-child(5) { animation-delay: 0.5s; }
+        .project-card.animate-in:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Light theme specific fixes */
+        body.light-theme, body:not(.dark) {
+            background-color: #f8fafc !important;
+            color: #1e293b !important;
+        }
+        
+        body.light-theme .text-slate-900,
+        body:not(.dark) .text-slate-900 {
+            color: #0f172a !important;
+        }
+        
+        body.light-theme .text-slate-600,
+        body:not(.dark) .text-slate-600 {
+            color: #475569 !important;
+        }
+        
+        body.light-theme .text-slate-700,
+        body:not(.dark) .text-slate-700 {
+            color: #334155 !important;
+        }
+        
+        body.light-theme .bg-white,
+        body:not(.dark) .bg-white {
+            background-color: #ffffff !important;
+        }
+        
+        body.light-theme .bg-slate-50,
+        body:not(.dark) .bg-slate-50 {
+            background-color: #f8fafc !important;
+        }
+        
+        body.light-theme .bg-slate-100,
+        body:not(.dark) .bg-slate-100 {
+            background-color: #f1f5f9 !important;
+        }
+        
+        /* Light mode details button fix */
+        body.light-theme .details-btn,
+        body:not(.dark) .details-btn {
+            background-color: #e2e8f0 !important;
+            color: #1e293b !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+        
+        body.light-theme .details-btn:hover,
+        body:not(.dark) .details-btn:hover {
+            background-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        
+        /* Project grid container fixes */
+        #projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media (min-width: 768px) {
+            #projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            #projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Ensure all project cards stay within bounds */
+        .project-card {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 0;
+        }
+        
+        /* Fix footer z-index */
+        footer {
+            position: relative;
+            z-index: 20;
+        }
+        
+        /* Project Details Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .dark .modal-content {
+            background: #1e293b;
+            color: white;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        
+        .dark .modal-close {
+            color: #94a3b8;
+        }
+        
+        .dark .modal-close:hover {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 transition-all duration-500">
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 nav-blur transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class=" text-2xl font-black gradient-text">Salman Nawaz</h1>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Home</a>
+                    <a href="#projects" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Projects</a>
+                    <a href="#skills" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Skills</a>
+                    <a href="#about" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">About</a>
+                    <a href="#contact" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Contact</a>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon text-slate-600 dark:hidden"></i>
+                        <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
+                    </button>
+                    <a href="#" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-medium">
+                        <i class="fas fa-download mr-2"></i>Resume
+                    </a>
+                </div>
+                <div class="md:hidden flex items-center space-x-3">
+                    <button id="theme-toggle-mobile" class="theme-toggle">
+                        <i class="fas fa-moon text-slate-600 dark:hidden"></i>
+                        <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all duration-300">
+                        <i class="fas fa-bars text-xl text-slate-700 dark:text-slate-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden mobile-menu">
+            <div class="py-2">
+                <a href="#home" class="mobile-menu-item nav-link">
+                    <i class="fas fa-home mr-3"></i>Home
+                </a>
+                <a href="#projects" class="mobile-menu-item nav-link">
+                    <i class="fas fa-folder mr-3"></i>Projects
+                </a>
+                <a href="#skills" class="mobile-menu-item nav-link">
+                    <i class="fas fa-code mr-3"></i>Skills
+                </a>
+                <a href="#about" class="mobile-menu-item nav-link">
+                    <i class="fas fa-user mr-3"></i>About
+                </a>
+                <a href="#contact" class="mobile-menu-item nav-link">
+                    <i class="fas fa-envelope mr-3"></i>Contact
+                </a>
+            </div>
+            <a href="#" class="mobile-menu-cta">
+                <i class="fas fa-download mr-2"></i>Download Resume
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-16 min-h-screen flex items-center relative hero-bg">
+        <div class="floating-elements"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center text-white">
+                <div class="animate-fade-in">
+                    <p class="hero-text heading text-lg md:text-xl mb-4 opacity-90">Hello, I'm</p>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+                        <span class=" hero-head heading block">Salman</span>
+                        <span class="block gradient-text">Nawaz</span>
+                    </h1>
+                    <div class="text-xl md:text-2xl lg:text-3xl mb-8 h-20">
+                        <span id="typing-text" class="typing-animation font-light"></span>
+                    </div>
+                    <p class="hero-text text-lg md:text-xl mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
+                        Crafting digital experiences that push boundaries. From mobile apps to web platforms, 
+                        I build solutions that make a difference.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <a href="#projects" class="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-100 transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
+                            <i class="fas fa-rocket mr-2"></i>View My Work
+                        </a>
+                        <a href="#contact" class="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-100 transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
+                            <i class="fas fa-comment mr-2"></i>Let's Talk
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <a href="#projects" class="text-white text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative bg-white dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                    Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                    Discover my latest work and the technologies that power them
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active bg-primary text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg" data-filter="all">
+                    All Projects
+                </button>
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="web">
+                    <i class="fas fa-globe mr-2"></i>Web Apps
+                </button>
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="mobile">
+                    <i class="fas fa-mobile-alt mr-2"></i>Mobile Apps
+                </button>
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="ai">
+                    <i class="fas fa-brain mr-2"></i>AI Projects
+                </button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 mb-16" id="projects-grid">
+                <!-- Project 1: QR Code Generator -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-48 bg-gradient-to-br from-blue-500 to-cyan-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-qrcode text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web App</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">QR Code Generator</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Advanced QR code generator with customization options, batch processing, and multiple export formats.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Canvas API</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://sallulabs.com/QR-Scanner" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="qr-generator">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Music App for Deaf -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="mobile">
+                    <div class="relative h-48 bg-gradient-to-br from-purple-500 to-pink-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-music text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Android</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Music for Deaf Community</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Innovative music app with visual feedback and haptic responses designed for the deaf community.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">Audio Processing</span>
+                            <span class="tech-tag">Haptic API</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="music-deaf">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: AI Font Generator -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai web">
+                    <div class="relative h-48 bg-gradient-to-br from-orange-500 to-red-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-font text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">AI + Web</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">AI Font Generator</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Transform handwriting into custom fonts using machine learning and neural networks.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Fontforge</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://fontgenerator.sallulabs.com/" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Try Now
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="ai-font">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: CSS Extractor -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-48 bg-gradient-to-br from-green-500 to-teal-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-code text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web Tool</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">CSS Extractor</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Extract, optimize, and clean CSS from any website with advanced parsing capabilities.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">CSS Parser</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">DOM API</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://sallulabs.com/CSSExtractor" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="css-extractor">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                      <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-48 bg-gradient-to-br from-green-500 to-teal-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-brush text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web Tool</span>
+                        </div>
+                    </div>
+                </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Background Remover</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Remove backgrounds from images easily and accuratly!</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Rembg</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://sallulabs.com/CSSExtractor" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="css-extractor">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: QR Inventory -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="mobile">
+                    <div class="relative h-48 bg-gradient-to-br from-indigo-500 to-purple-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-boxes text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Android</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">QR Inventory Manager</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Complete inventory management system with QR scanning and real-time tracking.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">ZXing</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="qr-inventory">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: AI Recipe App -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai mobile">
+                    <div class="relative h-48 bg-gradient-to-br from-yellow-500 to-orange-500 overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative h-full flex items-center justify-center">
+                            <i class="fas fa-utensils text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">AI + Mobile</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">AI Recipe Assistant</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Smart cooking companion with AI-powered recipe suggestions and meal planning.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Kotlin</span>
+                            <span class="tech-tag">ML Kit</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="ai-recipe">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View More Projects Button -->
+            <div class="text-center">
+                <a href="#contact" class="inline-flex items-center bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg">
+                    <i class="fas fa-envelope mr-3"></i>
+                    Interested in My Work?
+                    <i class="fas fa-arrow-right ml-3"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modal-body">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-float"></div>
+            <div class="absolute top-3/4 right-1/4 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-xl animate-float" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                    Skills & <span class="gradient-text">Technologies</span>
+                </h2>
+                <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                    Constantly learning and adapting to the latest technologies
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center">
+                        <div class="w-3 h-3 bg-gradient-to-r from-primary to-secondary rounded-full mr-3"></div>
+                        Technical Expertise
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-900 dark:text-white font-semibold">Frontend Development</span>
+                                <span class="text-primary font-bold">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-900 dark:text-white font-semibold">Android Development</span>
+                                <span class="text-primary font-bold">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-900 dark:text-white font-semibold">Backend Development</span>
+                                <span class="text-primary font-bold">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-900 dark:text-white font-semibold">Machine Learning</span>
+                                <span class="text-primary font-bold">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-slate-900 dark:text-white font-semibold">UI/UX Design</span>
+                                <span class="text-primary font-bold">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technology Stack -->
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center">
+                        <div class="w-3 h-3 bg-gradient-to-r from-secondary to-accent rounded-full mr-3"></div>
+                        Technology Stack
+                    </h3>
+                    
+                    <div class="grid grid-cols-3 sm:grid-cols-4 gap-6">
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">HTML5</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-css3-alt"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">CSS3</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">JavaScript</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">React</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Node.js</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Python</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-android"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Android</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-git-alt"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Git</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications & Achievements -->
+            <div class="grid md:grid-cols-3 gap-8 mt-16">
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-code text-2xl text-white"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">50+ Projects</h4>
+                    <p class="text-slate-600 dark:text-slate-400">Completed across various platforms</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-2xl text-white"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">5+ Years</h4>
+                    <p class="text-slate-600 dark:text-slate-400">Development experience</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lightbulb text-2xl text-white"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">15+ Technologies</h4>
+                    <p class="text-slate-600 dark:text-slate-400">Mastered and actively using</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative overflow-hidden bg-white dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left Column -->
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                        About <span class="gradient-text">Me</span>
+                    </h2>
+                    <div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p>
+                            I'm a passionate full-stack developer with over 5 years of experience creating 
+                            innovative digital solutions. My journey began with a simple curiosity about 
+                            how apps work, and it has evolved into a deep love for crafting user-centered experiences.
+                        </p>
+                        <p>
+                            Specializing in modern web technologies and mobile development, I've had the 
+                            privilege of working on projects that have impacted thousands of users. From 
+                            accessibility-focused applications to AI-powered tools, I believe technology 
+                            should make life better for everyone.
+                        </p>
+                        <p>
+                            When I'm not coding, you'll find me exploring new technologies, contributing to 
+                            open-source projects, or mentoring aspiring developers in my community.
+                        </p>
+                    </div>
+                    
+                    <!-- Quick Facts -->
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="glass rounded-xl p-4">
+                            <div class="text-3xl font-black gradient-text mb-1">5+</div>
+                            <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Years Experience</div>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <div class="text-3xl font-black gradient-text mb-1">50+</div>
+                            <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Projects Completed</div>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <div class="text-3xl font-black gradient-text mb-1">15+</div>
+                            <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Technologies</div>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <div class="text-3xl font-black gradient-text mb-1">24/7</div>
+                            <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">Available</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="relative">
+                    <div class="glass rounded-3xl p-8 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
+                        <div class="relative z-10">
+                            <div class="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
+                                <i class="fas fa-user text-4xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-4">Salman Nawaz</h3>
+                            <p class="text-center text-slate-600 dark:text-slate-400 mb-6">Full-Stack Developer & UI/UX Enthusiast</p>
+                            
+                            <!-- Social Links -->
+                            <div class="flex justify-center space-x-4">
+                                <a href="#" class=" icon-about w-12 h-12   rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full animate-float opacity-80"></div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full animate-float opacity-60" style="animation-delay: 3s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
+                    Let's Work <span class="gradient-text">Together</span>
+                </h2>
+                <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                    Have a project in mind? Let's discuss how we can bring your ideas to life.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Email</h4>
+                                <p class="text-slate-600 dark:text-slate-400">salman.nawaz@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Phone</h4>
+                                <p class="text-slate-600 dark:text-slate-400">+92 300 1234567</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-900 dark:text-white">Location</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Karachi, Pakistan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Response Time -->
+                    <div class="glass rounded-2xl p-6 bg-gradient-to-r from-primary/10 to-secondary/10">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-slate-900 dark:text-white font-bold">Usually responds within 24 hours</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">I'm always excited to discuss new opportunities and collaborations!</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="glass rounded-2xl p-8 relative z-10">
+                    <form class="space-y-6 relative z-20">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Name</label>
+                            <input type="text" name="name" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" placeholder="Your full name" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Email</label>
+                            <input type="email" name="email" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" placeholder="your.email@example.com" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Project Type</label>
+                            <select name="project_type" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" required>
+                                <option value="">Select project type</option>
+                                <option value="web">Web Application</option>
+                                <option value="mobile">Mobile App</option>
+                                <option value="ai">AI/ML Project</option>
+                                <option value="design">UI/UX Design</option>
+                                <option value="consultation">Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Message</label>
+                            <textarea name="message" rows="4" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white resize-none relative z-30" placeholder="Tell me about your project..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg relative z-30">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 relative overflow-hidden z-20">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-black gradient-text mb-4">Salman Nawaz</h3>
+                    <p class="text-slate-400 mb-6 max-w-md">
+                        Passionate developer creating innovative solutions that make a difference. 
+                        Let's build something amazing together.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-slate-400 hover:text-white transition-colors duration-300">Home</a></li>
+                        <li><a href="#projects" class="text-slate-400 hover:text-white transition-colors duration-300">Projects</a></li>
+                        <li><a href="#skills" class="text-slate-400 hover:text-white transition-colors duration-300">Skills</a></li>
+                        <li><a href="#about" class="text-slate-400 hover:text-white transition-colors duration-300">About</a></li>
+                        <li><a href="#contact" class="text-slate-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li class="text-slate-400">Web Development</li>
+                        <li class="text-slate-400">Mobile Apps</li>
+                        <li class="text-slate-400">UI/UX Design</li>
+                        <li class="text-slate-400">AI Solutions</li>
+                        <li class="text-slate-400">Consulting</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-slate-400">
+                    &copy; 2025 Salman Nawaz. Made with <i class="fas fa-heart text-red-500 mx-1"></i> and lots of coffee.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Project details data
+        const projectDetails = {
+            'qr-generator': {
+                title: 'QR Code Generator',
+                category: 'Web Application',
+                technologies: ['JavaScript', 'Canvas API', 'CSS3', 'HTML5'],
+                description: 'A comprehensive QR code generator with advanced customization options including logo embedding, color schemes, and multiple export formats.',
+                features: [
+                    'Custom logo embedding',
+                    'Multiple color schemes',
+                    'Batch QR code generation',
+                    'Export to PNG, SVG, PDF',
+                    'Error correction levels',
+                    'Real-time preview',
+                    'URL shortening integration'
+                ],
+                challenges: 'The main challenge was implementing efficient batch processing while maintaining image quality and ensuring cross-browser compatibility.',
+                impact: 'Used by over 1,000 users monthly for various business and personal needs.',
+                github: '#',
+                demo: '#'
+            },
+            'music-deaf': {
+                title: 'Music for Deaf Community',
+                category: 'Mobile Application',
+                technologies: ['Kotlin', 'Audio Processing', 'Haptic API', 'Material Design'],
+                description: 'An innovative Android app that makes music accessible to the deaf community through visual feedback and haptic responses.',
+                features: [
+                    'Real-time audio visualization',
+                    'Haptic feedback patterns',
+                    'Beat detection and vibration sync',
+                    'Visual waveform display',
+                    'Customizable sensitivity settings',
+                    'Music library integration',
+                    'Social sharing features'
+                ],
+                challenges: 'Creating meaningful haptic patterns that accurately represent musical elements while ensuring the app works across different Android devices.',
+                impact: 'Currently in beta testing with local deaf community organizations.',
+                github: '#',
+                demo: '#'
+            },
+            'ai-font': {
+                title: 'AI Font Generator',
+                category: 'AI + Web Application',
+                technologies: ['TensorFlow', 'Python', 'React', 'FastAPI', 'OpenCV'],
+                description: 'Transform handwriting samples into custom digital fonts using machine learning and neural networks.',
+                features: [
+                    'Handwriting analysis and processing',
+                    'Neural network font generation',
+                    'Multiple font styles support',
+                    'Real-time preview',
+                    'Font format export (TTF, OTF)',
+                    'Character spacing optimization',
+                    'Web-based interface'
+                ],
+                challenges: 'Training the model to maintain consistency across different characters while preserving the unique characteristics of individual handwriting.',
+                impact: 'Generated over 500 custom fonts for designers and individuals.',
+                github: '#',
+                demo: '#'
+            },
+            'css-extractor': {
+                title: 'CSS Extractor',
+                category: 'Web Tool',
+                technologies: ['CSS Parser', 'Node.js', 'DOM API', 'Puppeteer'],
+                description: 'Extract, optimize, and clean CSS from any website with advanced parsing and optimization capabilities.',
+                features: [
+                    'Live website CSS extraction',
+                    'Unused CSS removal',
+                    'CSS minification',
+                    'Selector optimization',
+                    'Media query analysis',
+                    'Performance metrics',
+                    'Export cleaned CSS'
+                ],
+                challenges: 'Handling dynamic content and ensuring accurate CSS extraction from modern single-page applications.',
+                impact: 'Helped developers reduce CSS bundle sizes by an average of 40%.',
+                github: '#',
+                demo: '#'
+            },
+            'qr-inventory': {
+                title: 'QR Inventory Manager',
+                category: 'Mobile Application',
+                technologies: ['Java', 'SQLite', 'ZXing', 'Material Design'],
+                description: 'Complete inventory management system with QR scanning capabilities for real-time tracking and management.',
+                features: [
+                    'QR code scanning and generation',
+                    'Inventory tracking',
+                    'Low stock alerts',
+                    'Barcode support',
+                    'Export reports',
+                    'Multi-location support',
+                    'Offline functionality'
+                ],
+                challenges: 'Ensuring reliable QR code scanning in various lighting conditions and implementing robust offline data synchronization.',
+                impact: 'Currently being used by 3 small businesses for inventory management.',
+                github: '#',
+                demo: '#'
+            },
+            'ai-recipe': {
+                title: 'AI Recipe Assistant',
+                category: 'AI + Mobile Application',
+                technologies: ['Kotlin', 'ML Kit', 'Firebase', 'TensorFlow Lite'],
+                description: 'Smart cooking companion with AI-powered recipe suggestions based on available ingredients and dietary preferences.',
+                features: [
+                    'Ingredient recognition via camera',
+                    'AI-powered recipe suggestions',
+                    'Dietary restriction filters',
+                    'Nutritional information',
+                    'Shopping list generation',
+                    'Cooking timer integration',
+                    'Recipe sharing community'
+                ],
+                challenges: 'Training the ingredient recognition model to work accurately with various lighting conditions and food presentations.',
+                impact: 'In development with planned launch for Q2 2025.',
+                github: '#',
+                demo: '#'
+            }
+        };
+
+        // Modal functions
+        function showProjectDetails(projectId) {
+            const project = projectDetails[projectId];
+            if (!project) return;
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">${project.title}</h2>
+                    <div class="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold mb-4">
+                        ${project.category}
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Technologies Used</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Project Overview</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${project.description}</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Key Features</h3>
+                    <ul class="space-y-2">
+                        ${project.features.map(feature => `
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                                <span class="text-slate-600 dark:text-slate-400">${feature}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Challenges & Solutions</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${project.challenges}</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Impact</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${project.impact}</p>
+                </div>
+                
+                <div class="flex gap-4 pt-4 border-t border-slate-200 dark:border-slate-600">
+                    <a href="${project.demo}" class="flex-1 bg-primary text-white py-3 px-6 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                        <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                    </a>
+                    <a href="${project.github}" class="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-3 px-6 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium">
+                        <i class="fab fa-github mr-2"></i>View Code
+                    </a>
+                </div>
+            `;
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('project-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Typing animation
+        const texts = [
+            "Full-Stack Developer",
+            "Mobile App Creator", 
+            "UI/UX Enthusiast",
+            "AI Integration Specialist",
+            "Problem Solver"
+        ];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 100;
+        const deletingSpeed = 50;
+        const pauseTime = 2000;
+        
+        function typeWriter() {
+            const typingElement = document.getElementById('typing-text');
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            let speed = isDeleting ? deletingSpeed : typingSpeed;
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                speed = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+            
+            setTimeout(typeWriter, speed);
+        }
+        
+        // Start typing animation when page loads
+        document.addEventListener('DOMContentLoaded', typeWriter);
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+        const body = document.body;
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                body.classList.add('light-theme');
+                body.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                body.classList.remove('light-theme');
+                body.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeToggle?.addEventListener('click', toggleTheme);
+        themeToggleMobile?.addEventListener('click', toggleTheme);
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            body.classList.add('dark');
+            body.classList.remove('light-theme');
+        } else {
+            html.classList.remove('dark');
+            body.classList.add('light-theme');
+            body.classList.remove('dark');
+        }
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton?.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu if open
+                mobileMenu?.classList.add('hidden');
+            });
+        });
+
+        // Project filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-slate-100', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('active', 'bg-primary', 'text-white');
+                button.classList.remove('bg-slate-100', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white');
+
+                const filter = button.getAttribute('data-filter');
+
+                projectCards.forEach((card, index) => {
+                    const categories = card.getAttribute('data-category').split(' ');
+                    
+                    if (filter === 'all' || categories.includes(filter)) {
+                        card.style.display = 'block';
+                        card.style.position = 'relative';
+                        card.style.zIndex = '1';
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+                        // Stagger animation
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        }, index * 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Details button event listeners
+        document.querySelectorAll('.details-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = button.getAttribute('data-project');
+                showProjectDetails(projectId);
+            });
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-element');
+            
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.glass, .tech-icon, .skill-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Skill bar animation
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.style.width = bar.style.width || '0%';
+                        }, index * 200);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const skillsSection = document.querySelector('#skills');
+        if (skillsSection) {
+            skillObserver.observe(skillsSection);
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+
+        // Form submission
+        const contactForm = document.querySelector('#contact form');
+        contactForm?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Add loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                submitBtn.classList.remove('from-primary', 'to-secondary');
+                submitBtn.classList.add('bg-green-500');
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.add('from-primary', 'to-secondary');
+                    submitBtn.classList.remove('bg-green-500');
+                    contactForm.reset();
+                }, 2000);
+            }, 2000);
+        });
+
+        // Mouse movement parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.querySelectorAll('.floating-elements').forEach(element => {
+                const moveX = (mouseX - 0.5) * 30;
+                const moveY = (mouseY - 0.5) * 30;
+                element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        // Add stagger animation to project cards on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                card.style.position = 'relative';
+                card.style.zIndex = '1';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+    </script>
+</body>
