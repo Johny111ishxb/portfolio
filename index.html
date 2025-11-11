@@ -35,9 +35,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --card-bg: rgba(195, 223, 223, 0.144);
-            --card-border: 0.5px solid rgb(202, 200, 200);
+
+
+/* Ensure proper color inheritance in light mode */
+        body:not(.dark) {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        /* Fix text colors that aren't responding to dark mode toggle */
+        :not(.dark) .text-slate-900 {
+            color: #0f172a;
+        }
+        
+        :not(.dark) .text-slate-600 {
+            color: #475569;
+        }
+        
+        :not(.dark) .text-slate-700 {
+            color: #334155;
+        }
+        
+        :not(.dark) .text-slate-800 {
+            color: #1e293b;
+        }
+        
+        /* Ensure white backgrounds stay white in light mode */
+        :not(.dark) .bg-white {
+            background-color: #ffffff;
+        }
+        
+        :not(.dark) .bg-slate-50 {
+            background-color: #f8fafc;
+        }
+        
+        :not(.dark) .bg-slate-100 {
+            background-color: #f1f5f9;
+        }
+        
+        /* Fix details button in light mode */
+        :not(.dark) .details-btn {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+        }
+        
+        :not(.dark) .details-btn:hover {
+            background-color: #cbd5e1;
+            color: #0f172a;
         }
         
         * {
@@ -70,15 +115,16 @@
         }
         
         .glass {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border: var(--card-border);
+            border: 1px solid rgba(203, 213, 225, 0.3);
             border-radius: 16px;
         }
         
         .dark .glass {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            background: rgba(15, 23, 42, 0.9) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(71, 85, 105, 0.3) !important;
         }
         
         .gradient-text {
@@ -93,30 +139,11 @@
         .hero-bg {
             position: relative;
             overflow: hidden;
+            background: #ffffff;
         }
         
         .dark .hero-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e293b 100%);
-        }
-        
-        .dark {
-            color: rgb(255, 255, 255);
-        }
- 
-        .dark .hero-head {
-            color: white;
-        }
-
-        .dark .typing-animation {
-            color: white;
-        }
-
-        .dark .hero-text{
-            color: white;
-        }
-
-        .hero-head,.hero-text, .typing-animation {
-            color : black;
+            background: #020617 !important;
         }
        
         
@@ -126,24 +153,36 @@
         .hero-bg::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(251, 191, 36, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
             animation: float 20s ease-in-out infinite;
+        }
+        
+        .dark .hero-bg::before {
+            background: radial-gradient(circle at 30% 50%, rgba(251, 191, 36, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
         }
         
         .card-hover {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             z-index: 1;
+            border-radius: 24px !important;
+            overflow: hidden;
         }
         
         .card-hover:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px rgba(251, 191, 36, 0.2);
             z-index: 10;
+        }
+        
+        .dark .card-hover:hover {
+            box-shadow: 0 25px 50px rgba(251, 191, 36, 0.3);
         }
         
         .tech-icon {
@@ -162,8 +201,10 @@
         }
         
         .dark .nav-blur {
-            background: rgba(15, 23, 42, 0.95);
-            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
         }
         
         /* Theme toggle button styling */
@@ -189,12 +230,14 @@
         }
         
         .dark .theme-toggle {
-            background: rgba(15, 23, 42, 0.9);
-            border-color: rgba(251, 191, 36, 0.3);
+            background: rgba(2, 6, 23, 0.95);
+            border-color: rgba(251, 191, 36, 0.4);
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
         }
         
         .dark .theme-toggle:hover {
-            border-color: rgba(251, 191, 36, 0.5);
+            border-color: rgba(251, 191, 36, 0.6);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
         }
         
         .theme-toggle i {
@@ -211,14 +254,17 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-radius: 0 0 20px 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             margin-top: 1px;
         }
         
         .dark .mobile-menu {
-            background: rgba(15, 23, 42, 0.98);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: rgba(2, 6, 23, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(251, 191, 36, 0.1);
         }
         
         .mobile-menu-item {
@@ -245,8 +291,8 @@
         }
         
         .dark .mobile-menu-item {
-            color: #cbd5e1;
-            border-bottom-color: rgba(71, 85, 105, 0.3);
+            color: #e2e8f0;
+            border-bottom-color: rgba(71, 85, 105, 0.2);
         }
         
         .dark .mobile-menu-item:hover {
@@ -376,17 +422,30 @@
         }
         
         .tech-tag {
-            background: #f1f5f9;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
             color: #475569;
-            padding: 0.25rem 0.75rem;
+            padding: 0.375rem 0.875rem;
             border-radius: 9999px;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
+            border: 1px solid rgba(71, 85, 105, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .dark .tech-tag {
-            background: #475569;
-            color: #cbd5e1;
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            color: #e2e8f0;
+            border-color: rgba(251, 191, 36, 0.2);
+        }
+        
+        .dark .tech-tag:hover {
+            box-shadow: 0 4px 8px rgba(251, 191, 36, 0.2);
+            border-color: rgba(251, 191, 36, 0.4);
         }
         
         .filter-btn.active {
@@ -467,24 +526,38 @@
         }
         
         /* Project grid container fixes */
-        #projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+        .screenshot-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .screenshot-item {
             position: relative;
-            z-index: 1;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         
-        @media (min-width: 768px) {
-            #projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .dark .screenshot-item {
+            background: #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
         
-        @media (min-width: 1024px) {
-            #projects-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            max-height: 600px;
+        }
+        
+        .screenshot-item:hover img {
+            transform: scale(1.05);
         }
         
         /* Ensure all project cards stay within bounds */
@@ -523,19 +596,20 @@
         
         .modal-content {
             background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 600px;
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 700px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
             animation: slideUp 0.3s ease-out;
         }
         
         .dark .modal-content {
-            background: #1e293b;
-            color: white;
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid rgba(71, 85, 105, 0.3);
         }
         
         .modal-close {
@@ -563,7 +637,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 transition-all duration-500">
+<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-all duration-500">
     <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 nav-blur transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -579,19 +653,12 @@
                     <a href="#skills" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Skills</a>
                     <a href="#about" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">About</a>
                     <a href="#contact" class="nav-link text-slate-700 dark:text-slate-300 hover:text-primary font-medium transition-all duration-300">Contact</a>
-                    <button id="theme-toggle" class="theme-toggle">
-                        <i class="fas fa-moon text-slate-600 dark:hidden"></i>
-                        <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
-                    </button>
-                    <a href="#" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-medium">
+                 
+                    <a href="resume.pdf" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all duration-300 font-medium">
                         <i class="fas fa-download mr-2"></i>Resume
                     </a>
                 </div>
                 <div class="md:hidden flex items-center space-x-3">
-                    <button id="theme-toggle-mobile" class="theme-toggle">
-                        <i class="fas fa-moon text-slate-600 dark:hidden"></i>
-                        <i class="fas fa-sun text-yellow-400 hidden dark:inline"></i>
-                    </button>
                     <button id="mobile-menu-button" class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all duration-300">
                         <i class="fas fa-bars text-xl text-slate-700 dark:text-slate-300"></i>
                     </button>
@@ -626,25 +693,25 @@
     <section id="home" class="pt-16 min-h-screen flex items-center relative hero-bg">
         <div class="floating-elements"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center text-white">
+            <div class="text-center">
                 <div class="animate-fade-in">
-                    <p class="hero-text heading text-lg md:text-xl mb-4 opacity-90">Hello, I'm</p>
+                    <p class="text-slate-700 dark:text-slate-200 text-lg md:text-xl mb-4">Hello, I'm</p>
                     <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
-                        <span class=" hero-head heading block">Salman</span>
+                        <span class="block text-slate-900 dark:text-white">Salman</span>
                         <span class="block gradient-text">Nawaz</span>
                     </h1>
                     <div class="text-xl md:text-2xl lg:text-3xl mb-8 h-20">
-                        <span id="typing-text" class="typing-animation font-light"></span>
+                        <span id="typing-text" class="typing-animation font-light text-slate-800 dark:text-slate-100"></span>
                     </div>
-                    <p class="hero-text text-lg md:text-xl mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
+                    <p class="text-slate-700 dark:text-slate-200 text-lg md:text-xl mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
                         Crafting digital experiences that push boundaries. From mobile apps to web platforms, 
                         I build solutions that make a difference.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <a href="#projects" class="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-100 transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
+                        <a href="#projects" class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
                             <i class="fas fa-rocket mr-2"></i>View My Work
                         </a>
-                        <a href="#contact" class="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-slate-100 transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
+                        <a href="#contact" class="bg-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-secondary transition-all duration-300 hover:shadow-xl hover:scale-105 text-lg">
                             <i class="fas fa-comment mr-2"></i>Let's Talk
                         </a>
                     </div>
@@ -655,30 +722,30 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 relative bg-white dark:bg-slate-900">
+    <section id="projects" class="py-20 relative bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                    Featured <span class="gradient-text">Projects</span>
+                    ✨ Featured <span class="gradient-text">Projects</span>
                 </h2>
                 <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-                    Discover my latest work and the technologies that power them
+                    Discover my latest work and the technologies that power them 🚀
                 </p>
             </div>
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button class="filter-btn active bg-primary text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg" data-filter="all">
-                    All Projects
+                <button class="filter-btn active bg-primary text-white px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl" data-filter="all">
+                    ✨ All Projects
                 </button>
-                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="web">
-                    <i class="fas fa-globe mr-2"></i>Web Apps
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-slate-200 dark:border-slate-600" data-filter="web">
+                    🌐 Web Apps
                 </button>
-                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="mobile">
-                    <i class="fas fa-mobile-alt mr-2"></i>Mobile Apps
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-slate-200 dark:border-slate-600" data-filter="mobile">
+                    📱 Mobile Apps
                 </button>
-                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg border border-slate-200 dark:border-slate-600" data-filter="ai">
-                    <i class="fas fa-brain mr-2"></i>AI Projects
+                <button class="filter-btn bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white px-8 py-3.5 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-slate-200 dark:border-slate-600" data-filter="ai">
+                    🤖 AI Projects
                 </button>
             </div>
 
@@ -686,13 +753,13 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 mb-16" id="projects-grid">
                 <!-- Project 1: QR Code Generator -->
                 <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
-                    <div class="relative h-48 bg-gradient-to-br from-blue-500 to-cyan-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-qrcode text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                    <div class="relative h-56 bg-gradient-to-br from-blue-500 to-cyan-500 overflow-hidden">
+                        <img src="qr-code.png" alt="QR Code Generator" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/80 to-cyan-500/80 hidden items-center justify-center">
+                            <i class="fas fa-qrcode text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web App</span>
+                            <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Web App</span>
                         </div>
                     </div>
                     <div class="p-6">
@@ -714,15 +781,45 @@
                     </div>
                 </div>
 
-                <!-- Project 2: Music App for Deaf -->
-                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="mobile">
-                    <div class="relative h-48 bg-gradient-to-br from-purple-500 to-pink-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-music text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                <!-- Project 2: Chatrio Chat App -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-56 bg-gradient-to-br from-indigo-500 to-purple-500 overflow-hidden">
+                        <img src="chatrio.webp" alt="Chatrio Chat App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/80 to-purple-500/80 hidden items-center justify-center">
+                            <i class="fas fa-comments text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Android</span>
+                            <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Web App</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Chatrio - Random Chat</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Match with random people worldwide based on interests and moods. Real-time chat powered by WebSocket technology.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">WebSocket</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">React</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://chatrio.sallulabs.com/" target="_blank" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="chatrio">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Music App for Deaf -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="mobile">
+                    <div class="relative h-56 bg-gradient-to-br from-purple-500 to-pink-500 overflow-hidden">
+                        <img src="music.jpg" alt="Music App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-pink-500/80 hidden items-center justify-center">
+                            <i class="fas fa-music text-6xl text-white"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Android</span>
                         </div>
                     </div>
                     <div class="p-6">
@@ -734,8 +831,8 @@
                             <span class="tech-tag">Haptic API</span>
                         </div>
                         <div class="flex gap-3">
-                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
-                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                            <a href="deaf-music-app.apk" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fa-solid fa-download mr-2"></i>Download
                             </a>
                             <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="music-deaf">
                                 <i class="fas fa-info-circle mr-2"></i>Details
@@ -746,13 +843,13 @@
 
                 <!-- Project 3: AI Font Generator -->
                 <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai web">
-                    <div class="relative h-48 bg-gradient-to-br from-orange-500 to-red-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-font text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                    <div class="relative h-56 bg-gradient-to-br from-orange-500 to-red-500 overflow-hidden">
+                        <img src="fonts.png" alt="AI Font Generator" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/80 to-red-500/80 hidden items-center justify-center">
+                            <i class="fas fa-font text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">AI + Web</span>
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">AI + Web</span>
                         </div>
                     </div>
                     <div class="p-6">
@@ -776,13 +873,13 @@
 
                 <!-- Project 4: CSS Extractor -->
                 <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
-                    <div class="relative h-48 bg-gradient-to-br from-green-500 to-teal-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-code text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                    <div class="relative h-56 bg-gradient-to-br from-green-500 to-teal-500 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?w=800&h=600&fit=crop" alt="CSS Extractor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/80 to-teal-500/80 hidden items-center justify-center">
+                            <i class="fas fa-code text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web Tool</span>
+                            <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Web Tool</span>
                         </div>
                     </div>
                     <div class="p-6">
@@ -805,58 +902,87 @@
                     
                 </div>
 
-                <!-- Project 5: QR Inventory -->
-                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="mobile">
-                    <div class="relative h-48 bg-gradient-to-br from-indigo-500 to-purple-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-boxes text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                <!-- Project 5: AI Watermark Remover -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai web">
+                    <div class="relative h-56 bg-gradient-to-br from-red-500 to-pink-500 overflow-hidden">
+                        <img src="object.webp" alt="AI Watermark Remover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-red-500/80 to-pink-500/80 hidden items-center justify-center">
+                            <i class="fas fa-magic text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Android</span>
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">AI + Desktop</span>
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">QR Inventory Manager</h3>
-                        <p class="text-slate-600 dark:text-slate-400 mb-4">Complete inventory management system with QR scanning and real-time tracking.</p>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">AI Watermark & Object Remover</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Advanced AI-powered tool that intelligently removes watermarks and objects from images using deep learning.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="tech-tag">Java</span>
-                            <span class="tech-tag">SQLite</span>
-                            <span class="tech-tag">ZXing</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PyTorch</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">LaMa AI</span>
                         </div>
                         <div class="flex gap-3">
                             <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
-                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
                             </a>
-                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="qr-inventory">
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="WaterMark Remover">
                                 <i class="fas fa-info-circle mr-2"></i>Details
                             </button>
                         </div>
                     </div>
                 </div>
-                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
-                    <div class="relative h-48 bg-gradient-to-br from-indigo-500 to-purple-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-brush text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web ai">
+                    <div class="relative h-56 bg-gradient-to-br from-pink-500 to-purple-500 overflow-hidden">
+                        <img src="background.jpg" alt="Background Remover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/80 to-purple-500/80 hidden items-center justify-center">
+                            <i class="fas fa-brush text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Web</span>
+                            <span class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">AI + Web</span>
                         </div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Background Remover</h3>
-                        <p class="text-slate-600 dark:text-slate-400 mb-4">Remove backgrounds from images easily and accuratly!</p>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Remove backgrounds from images easily and accurately using AI-powered technology!</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="tech-tag">Python</span>
                             <span class="tech-tag">TensorFlow</span>
                             <span class="tech-tag">Rembg</span>
                         </div>
                         <div class="flex gap-3">
-                            <a href="https://backgroundremover.sallulabs.com/" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
-                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            <a href="https://github.com/Johny111ishxb/background-remover" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-code mr-2"></i>View Code
                             </a>
                             <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="Background Remover">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-56 bg-gradient-to-br from-purple-500 to-indigo-500 overflow-hidden">
+                        <img src="beauty.webp" alt="Beauty Salon Management" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-indigo-500/80 hidden items-center justify-center">
+                            <i class="fas fa-spa text-6xl text-white"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Desktop</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Beauty Salon Management System</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Comprehensive desktop application for managing beauty salon operations including appointments, customers, inventory, and billing.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">PyQt5</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://github.com/Johny111ishxb/beauty-salon-management" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>View Code
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="beauty-salon">
                                 <i class="fas fa-info-circle mr-2"></i>Details
                             </button>
                         </div>
@@ -865,13 +991,13 @@
 
                 <!-- Project 6: AI Recipe App -->
                 <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai mobile">
-                    <div class="relative h-48 bg-gradient-to-br from-yellow-500 to-orange-500 overflow-hidden">
-                        <div class="absolute inset-0 bg-black/20"></div>
-                        <div class="relative h-full flex items-center justify-center">
-                            <i class="fas fa-utensils text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
+                    <div class="relative h-56 bg-gradient-to-br from-yellow-500 to-orange-500 overflow-hidden">
+                        <img src="recipe.avif" alt="AI Recipe App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/80 to-orange-500/80 hidden items-center justify-center">
+                            <i class="fas fa-utensils text-6xl text-white"></i>
                         </div>
                         <div class="absolute top-4 right-4">
-                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">AI + Mobile</span>
+                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">AI + Mobile</span>
                         </div>
                     </div>
                     <div class="p-6">
@@ -883,8 +1009,8 @@
                             <span class="tech-tag">Firebase</span>
                         </div>
                         <div class="flex gap-3">
-                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
-                                <i class="fas fa-mobile-alt mr-2"></i>Coming Soon
+                            <a href="recipecheif.apk" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fa-solid fa-download mr-2"></i>Download
                             </a>
                             <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="ai-recipe">
                                 <i class="fas fa-info-circle mr-2"></i>Details
@@ -925,10 +1051,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                    Skills & <span class="gradient-text">Technologies</span>
+                    💻 Skills & <span class="gradient-text">Technologies</span>
                 </h2>
                 <p class="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-                    Constantly learning and adapting to the latest technologies
+                    Constantly learning and adapting to the latest technologies 🌟
                 </p>
             </div>
 
@@ -1002,6 +1128,20 @@
                     
                     <div class="grid grid-cols-3 sm:grid-cols-4 gap-6">
                         <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Python</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Flutter</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
                                 <i class="fab fa-html5"></i>
                             </div>
@@ -1009,7 +1149,7 @@
                         </div>
                         
                         <div class="tech-icon text-center">
-                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
                                 <i class="fab fa-css3-alt"></i>
                             </div>
                             <span class="text-sm font-medium text-slate-700 dark:text-slate-300">CSS3</span>
@@ -1030,24 +1170,24 @@
                         </div>
                         
                         <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Kotlin</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
+                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Electron.js</span>
+                        </div>
+                        
+                        <div class="tech-icon text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
                                 <i class="fab fa-node-js"></i>
                             </div>
                             <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Node.js</span>
-                        </div>
-                        
-                        <div class="tech-icon text-center">
-                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
-                                <i class="fab fa-python"></i>
-                            </div>
-                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Python</span>
-                        </div>
-                        
-                        <div class="tech-icon text-center">
-                            <div class="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-green-500 to-green-700 rounded-2xl flex items-center justify-center text-white text-2xl hover:shadow-lg transition-all duration-300">
-                                <i class="fab fa-android"></i>
-                            </div>
-                            <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Android</span>
                         </div>
                         
                         <div class="tech-icon text-center">
@@ -1090,19 +1230,20 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 relative overflow-hidden bg-white dark:bg-slate-900">
+    <section id="about" class="py-20 relative overflow-hidden bg-white dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <!-- Left Column -->
                 <div>
                     <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                        About <span class="gradient-text">Me</span>
+                        👋 About <span class="gradient-text">Me</span>
                     </h2>
                     <div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
                         <p>
                             I'm a passionate full-stack developer with over 2 years of experience creating 
-                            innovative digital solutions. i worked with many machine learning models and built tons of
-                            amazing Ai powered tools that helps individuals inlcuding designer , developers and normal peoples. and have built a ai platform called sallulabs
+                            innovative digital solutions. I've worked with many machine learning models and built tons of
+                            amazing AI-powered tools that help individuals including designers, developers, and everyday people. I've also built an AI platform called SalluLabs.
+                        </p>
                         <p>
                             Specializing in modern web technologies and mobile development, I've had the 
                             privilege of working on projects that have impacted thousands of users. From 
@@ -1141,16 +1282,16 @@
                     <div class="glass rounded-3xl p-8 relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10"></div>
                         <div class="relative z-10">
-                            <div class="w-32 h-32 bg-gradient-to-br from-primary to-secondary rounded-full mx-auto mb-6 flex items-center justify-center">
-                                <i class="fas fa-user text-4xl text-white"></i>
+                            <div class="w-40 h-40 rounded-full mx-auto mb-6 overflow-hidden ring-4 ring-primary/20 shadow-2xl">
+                                <img src="a.png" alt="Salman Nawaz" class="w-full h-full object-cover">
                             </div>
                             <h3 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-4">Salman Nawaz</h3>
                             <p class="text-center text-slate-600 dark:text-slate-400 mb-6">Full-Stack Developer & UI/UX Enthusiast</p>
                             
-                            <!-- Social Links -->
-                            <div class="flex justify-center space-x-4">
-                                <a href="#" class=" icon-about w-12 h-12   rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
-                                    <i class="fas fa-envelope"></i>
+                            <!-- Hire Me Button -->
+                            <div class="flex justify-center">
+                                <a href="#contact" class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center">
+                                    <i class="fas fa-handshake mr-2"></i>Hire Me
                                 </a>
                             </div>
                         </div>
@@ -1165,7 +1306,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+    <section id="contact" class="py-20 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
         <div class="absolute inset-0">
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-xl animate-pulse-slow"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-xl animate-pulse-slow" style="animation-delay: 2s;"></div>
@@ -1174,10 +1315,10 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">
-                    Let's Work <span class="gradient-text">Together</span>
+                    💌 Let's Work <span class="gradient-text">Together</span>
                 </h2>
                 <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                    Have a project in mind? Let's discuss how we can bring your ideas to life.
+                    Have a project in mind? Let's discuss how we can bring your ideas to life 🌈
                 </p>
             </div>
 
@@ -1232,38 +1373,57 @@
 
                 <!-- Contact Form -->
                 <div class="glass rounded-2xl p-8 relative z-10">
-                    <form class="space-y-6 relative z-20">
+                    <!-- 
+                        FORMSPREE SETUP REQUIRED:
+                        1. Go to https://formspree.io and create a free account
+                        2. Create a new form and get your Form ID
+                        3. Replace 'YOUR_FORM_ID' below with your actual Form ID
+                        Example: https://formspree.io/f/xyzabc123
+                        See FORMSPREE_SETUP.md for detailed instructions
+                    -->
+                    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-6 relative z-20" id="contact-form">
+                        <!-- Formspree will handle spam protection automatically -->
+                        <input type="hidden" name="_subject" value="New Portfolio Contact Message! 🎉">
+                        
                         <div>
-                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Name</label>
-                            <input type="text" name="name" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" placeholder="Your full name" required>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                <i class="fas fa-user mr-2 text-primary"></i>Name
+                            </label>
+                            <input type="text" name="name" class="w-full px-5 py-3.5 bg-white dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 text-slate-900 dark:text-white relative z-30 hover:border-primary/50" placeholder="Your full name ✨" required>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Email</label>
-                            <input type="email" name="email" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" placeholder="your.email@example.com" required>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                <i class="fas fa-envelope mr-2 text-primary"></i>Email
+                            </label>
+                            <input type="email" name="email" class="w-full px-5 py-3.5 bg-white dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 text-slate-900 dark:text-white relative z-30 hover:border-primary/50" placeholder="your.email@example.com 📧" required>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Project Type</label>
-                            <select name="project_type" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white relative z-30" required>
-                                <option value="">Select project type</option>
-                                <option value="web">Web Application</option>
-                                <option value="mobile">Mobile App</option>
-                                <option value="ai">AI/ML Project</option>
-                                <option value="design">UI/UX Design</option>
-                                <option value="consultation">Consultation</option>
-                                <option value="other">Other</option>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                <i class="fas fa-briefcase mr-2 text-primary"></i>Project Type
+                            </label>
+                            <select name="project_type" class="w-full px-5 py-3.5 bg-white dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 text-slate-900 dark:text-white relative z-30 hover:border-primary/50" required>
+                                <option value="">Select project type 🎯</option>
+                                <option value="web">💻 Web Application</option>
+                                <option value="mobile">📱 Mobile App</option>
+                                <option value="ai">🤖 AI/ML Project</option>
+                                <option value="design">🎨 UI/UX Design</option>
+                                <option value="consultation">💡 Consultation</option>
+                                <option value="other">✨ Other</option>
                             </select>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">Message</label>
-                            <textarea name="message" rows="4" class="w-full px-4 py-3 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-slate-900 dark:text-white resize-none relative z-30" placeholder="Tell me about your project..." required></textarea>
+                            <label class="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
+                                <i class="fas fa-comment-dots mr-2 text-primary"></i>Message
+                            </label>
+                            <textarea name="message" rows="4" class="w-full px-5 py-3.5 bg-white dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 text-slate-900 dark:text-white resize-none relative z-30 hover:border-primary/50" placeholder="Tell me about your project... 💬" required></textarea>
                         </div>
                         
-                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-lg font-bold hover:shadow-xl hover:scale-105 transition-all duration-300 text-lg relative z-30">
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-2xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg relative z-30 hover:from-secondary hover:to-primary">
                             <i class="fas fa-paper-plane mr-2"></i>
-                            Send Message
+                            Send Message ✨
                         </button>
                     </form>
                 </div>
@@ -1340,56 +1500,39 @@
                 category: 'Web Application',
                 technologies: ['JavaScript', 'Canvas API', 'CSS3', 'HTML5'],
                 description: 'A comprehensive QR code generator with advanced customization options including logo embedding, color schemes, and multiple export formats.',
-                features: [
-                    'Custom logo embedding',
-                    'Multiple color schemes',
-                    'Batch QR code generation',
-                    'Export to PNG, SVG, PDF',
-                    'Error correction levels',
-                    'Real-time preview',
-                    'URL shortening integration'
-                ],
+                screenshot: 'ss-qr.png',
                 challenges: 'The main challenge was implementing efficient batch processing while maintaining image quality and ensuring cross-browser compatibility.',
-                impact: 'Used by over 1,000 users monthly for various business and personal needs.',
-                github: '#',
-                demo: 'https://sallulabs.com/CSSExtractor'
+                github: 'https://github.com/Johny111ishxb/qr-generator',
+                demo: 'https://sallulabs.com/QR-Scanner'
+            },
+            'chatrio': {
+                title: 'Chatrio - Random Chat Platform',
+                category: 'Web Application',
+                technologies: ['WebSocket', 'Node.js', 'React', 'Socket.io', 'Express'],
+                description: 'A real-time chat platform that connects random people worldwide based on their interests and moods. Users can have spontaneous conversations with strangers who share similar interests, creating meaningful connections across the globe.',
+                screenshot: 'ss-chatrio.png',
+                challenges: 'Implementing efficient WebSocket connections for real-time messaging, creating a smart matching algorithm based on interests and moods, and ensuring scalability to handle multiple concurrent chat sessions.',
+                github: 'https://github.com/Johny111ishxb/chatrio',
+                demo: 'https://chatrio.sallulabs.com/'
             },
             'music-deaf': {
                 title: 'Music for Deaf Community',
                 category: 'Mobile Application',
                 technologies: ['Kotlin', 'Audio Processing', 'Haptic API', 'Material Design'],
                 description: 'An innovative Android app that makes music accessible to the deaf community through visual feedback and haptic responses.',
-                features: [
-                    'Real-time audio visualization',
-                    'Haptic feedback patterns',
-                    'Beat detection and vibration sync',
-                    'Visual waveform display',
-                    'Customizable sensitivity settings',
-                    'Music library integration',
-                    'Social sharing features'
-                ],
+                screenshot: 'ss-music.jfif',
                 challenges: 'Creating meaningful haptic patterns that accurately represent musical elements while ensuring the app works across different Android devices.',
-                impact: 'Currently in beta testing with local deaf community organizations.',
-                github: '#',
-                demo: '#'
+                github: 'https://github.com/Johny111ishxb/music-deaf',
+                demo: 'deaf-music-app.apk'
             },
             'ai-font': {
                 title: 'AI Font Generator',
                 category: 'AI + Web Application',
                 technologies: ['TensorFlow', 'Python', 'React', 'FastAPI', 'OpenCV'],
                 description: 'Transform handwriting samples into custom digital fonts using machine learning and neural networks.',
-                features: [
-                    'Handwriting analysis and processing',
-                    'Neural network font generation',
-                    'Multiple font styles support',
-                    'Real-time preview',
-                    'Font format export (TTF, OTF)',
-                    'Character spacing optimization',
-                    'Web-based interface'
-                ],
+                screenshot: 'ss-font.png',
                 challenges: 'Training the model to maintain consistency across different characters while preserving the unique characteristics of individual handwriting.',
-                impact: 'Generated over 500 custom fonts for designers and individuals.',
-                github: '#',
+                github: 'https://github.com/Johny111ishxb/ai-font-generator',
                 demo: 'https://fontgenerator.sallulabs.com/'
             },
             'css-extractor': {
@@ -1397,74 +1540,49 @@
                 category: 'Web Tool',
                 technologies: ['CSS Parser', 'Node.js', 'DOM API', 'Puppeteer'],
                 description: 'Extract, optimize, and clean CSS from any website with advanced parsing and optimization capabilities.',
-                features: [
-                    'Live website CSS extraction',
-                    'Unused CSS removal',
-                    'CSS minification',
-                    'Selector optimization',
-                    'Media query analysis',
-                    'Performance metrics',
-                    'Export cleaned CSS'
-                ],
+                screenshot: 'ss-css.png',
                 challenges: 'Handling dynamic content and ensuring accurate CSS extraction from modern single-page applications.',
-                impact: 'Helped developers reduce CSS bundle sizes by an average of 40%.',
-                github: '#',
+                github: 'https://github.com/Johny111ishxb/css-extractor',
                 demo: 'https://sallulabs.com/CSSExtractor'
             },
-            'qr-inventory': {
-                title: 'QR Inventory Manager',
-                category: 'Mobile Application',
-                technologies: ['Java', 'SQLite', 'ZXing', 'Material Design'],
-                description: 'Complete inventory management system with QR scanning capabilities for real-time tracking and management.',
-                features: [
-                    'QR code scanning and generation',
-                    'Inventory tracking',
-                    'Low stock alerts',
-                    'Barcode support',
-                    'Export reports',
-                    'Multi-location support',
-                    'Offline functionality'
-                ],
-                challenges: 'Ensuring reliable QR code scanning in various lighting conditions and implementing robust offline data synchronization.',
-                impact: 'Currently being used by 3 small businesses for inventory management.',
-                github: '#',
-                demo: '#'
+            'WaterMark Remover': {
+                title: 'AI Watermark & Object Remover',
+                category: 'AI + Desktop',
+                technologies: ['Python', 'PyTorch', 'Flask', 'OpenCV', 'LaMa AI', 'Pillow'],
+                description: 'Advanced AI-powered desktop application that intelligently removes watermarks and unwanted objects from images using deep learning inpainting techniques. Supports multiple detection strategies and provides fast, high-quality results.',
+                screenshot: 'ss-watermark.png',
+                challenges: 'Implementing robust mask detection across different image types and ensuring the LaMa AI model produces seamless inpainting results while maintaining image quality.',
+                github: 'https://github.com/Johny111ishxb/watermark-remover',
+                demo: ''
+            },
+            'beauty-salon': {
+                title: 'Beauty Salon Management System',
+                category: 'Desktop Application',
+                technologies: ['Python', 'MySQL', 'PyQt5', 'SQLite'],
+                description: 'Comprehensive desktop application for managing beauty salon operations including appointment scheduling, customer management, inventory tracking, and billing. Features an intuitive interface built with PyQt5.',
+                screenshot: 'beauty.webp',
+                challenges: 'Designing an efficient database schema for handling multiple service types and creating a user-friendly interface that non-technical salon staff can easily navigate.',
+                github: 'https://github.com/Johny111ishxb/beauty-salon-management',
+                demo: ''
             },
             'ai-recipe': {
                 title: 'AI Recipe Assistant',
                 category: 'AI + Mobile Application',
                 technologies: ['Kotlin', 'ML Kit', 'Firebase', 'TensorFlow Lite'],
                 description: 'Smart cooking companion with AI-powered recipe suggestions based on available ingredients and dietary preferences.',
-                features: [
-                    'Ingredient recognition via camera',
-                    'AI-powered recipe suggestions',
-                    'Dietary restriction filters',
-                    'Nutritional information',
-                    'Shopping list generation',
-                    'Cooking timer integration',
-                    'Recipe sharing community'
-                ],
+                screenshot: 'ss-recipe.jpg',
                 challenges: 'Training the ingredient recognition model to work accurately with various lighting conditions and food presentations.',
-                impact: 'In development with planned launch for Q2 2025.',
-                github: '#',
-                demo: '#'
+                github: 'https://github.com/Johny111ishxb/ai-recipe-assistant',
+                demo: 'recipecheif.apk'
             },
             'Background Remover': {
                 title: 'Background Remover',
-                category: 'Web Tool',
-                technologies: ['Python', 'Tensorflow', 'Rembg', 'Open CV'],
-                description: 'Extract, optimize, and clean CSS from any website with advanced parsing and optimization capabilities.',
-                features: [
-                    'Batch processing',
-                    'Background remover',
-                    'Removes in less than 10 sec',
-                    'image processing',
-                    'clean interface',
-                    
-                ],
-                challenges: 'Can removes backgrounds from images in less than 10 seconds with power of ai',
-                impact: 'Helped Peoples : can remove background without any strong experience in softwares like photoshop',
-                github: '#',
+                category: 'AI + Web',
+                technologies: ['Python', 'TensorFlow', 'Rembg', 'OpenCV'],
+                description: 'AI-powered background removal tool that processes images quickly and accurately without requiring any design software expertise.',
+                screenshot: 'ss-background.png',
+                challenges: 'Removing backgrounds from images in less than 10 seconds while maintaining edge quality and accuracy using AI models.',
+                github: 'https://github.com/Johny111ishxb/background-remover',
                 demo: 'https://backgroundremover.sallulabs.com/'
             },
 
@@ -1484,6 +1602,19 @@
                     </div>
                 </div>
                 
+                ${project.screenshot ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                            <i class="fas fa-image mr-2"></i>Project Preview
+                        </h3>
+                        <div class="screenshot-container">
+                            <div class="screenshot-item">
+                                <img src="${project.screenshot}" alt="${project.title} screenshot" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                ` : ''}
+                
                 <div class="mb-6">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Technologies Used</h3>
                     <div class="flex flex-wrap gap-2">
@@ -1497,34 +1628,30 @@
                 </div>
                 
                 <div class="mb-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Key Features</h3>
-                    <ul class="space-y-2">
-                        ${project.features.map(feature => `
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-primary mr-3 mt-1"></i>
-                                <span class="text-slate-600 dark:text-slate-400">${feature}</span>
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>
-                
-                <div class="mb-6">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Challenges & Solutions</h3>
                     <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${project.challenges}</p>
                 </div>
                 
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Impact</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${project.impact}</p>
-                </div>
+               
                 
                 <div class="flex gap-4 pt-4 border-t border-slate-200 dark:border-slate-600">
-                    <a href="${project.demo}" class="flex-1 bg-primary text-white py-3 px-6 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
-                        <i class="fas fa-external-link-alt mr-2"></i>Live Demo
-                    </a>
-                    <a href="${project.github}" class="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-3 px-6 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium">
-                        <i class="fab fa-github mr-2"></i>View Code
-                    </a>
+                    ${(() => {
+                        // Smart button logic: prioritize demo, then APK downloads, then github
+                        if (project.demo && project.demo !== '' && !project.demo.includes('.apk')) {
+                            return `<a href="${project.demo}" target="_blank" class="flex-1 bg-gradient-to-r from-primary to-secondary text-white py-3 px-6 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-center font-semibold">
+                                <i class="fas fa-external-link-alt mr-2"></i>View Live Demo 🚀
+                            </a>`;
+                        } else if (project.demo && project.demo.includes('.apk')) {
+                            return `<a href="${project.demo}" download class="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 px-6 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-center font-semibold">
+                                <i class="fas fa-download mr-2"></i>Download APK 📱
+                            </a>`;
+                        } else if (project.github && project.github !== '' && !project.github.includes('#')) {
+                            return `<a href="${project.github}" target="_blank" class="flex-1 bg-gradient-to-r from-slate-700 to-slate-900 text-white py-3 px-6 rounded-xl hover:shadow-xl hover:scale-105 transition-all duration-300 text-center font-semibold">
+                                <i class="fab fa-github mr-2"></i>View Source Code 💻
+                            </a>`;
+                        }
+                        return '';
+                    })()}
                 </div>
             `;
 
@@ -1604,32 +1731,19 @@
         const body = document.body;
 
         function toggleTheme() {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                body.classList.add('light-theme');
-                body.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                body.classList.remove('light-theme');
-                body.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
         }
 
         themeToggle?.addEventListener('click', toggleTheme);
         themeToggleMobile?.addEventListener('click', toggleTheme);
 
-        // Check for saved theme preference
+        // Check for saved theme preference or system preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             html.classList.add('dark');
-            body.classList.add('dark');
-            body.classList.remove('light-theme');
         } else {
             html.classList.remove('dark');
-            body.classList.add('light-theme');
-            body.classList.remove('dark');
         }
 
         // Mobile menu toggle
@@ -1776,31 +1890,17 @@
             }
         });
 
-        // Form submission
-        const contactForm = document.querySelector('#contact form');
+        // Form submission with Formspree
+        const contactForm = document.querySelector('#contact-form');
         contactForm?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
             // Add loading state
             const submitBtn = contactForm.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
             submitBtn.disabled = true;
             
-            // Simulate form submission
-            setTimeout(() => {
-                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
-                submitBtn.classList.remove('from-primary', 'to-secondary');
-                submitBtn.classList.add('bg-green-500');
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.classList.add('from-primary', 'to-secondary');
-                    submitBtn.classList.remove('bg-green-500');
-                    contactForm.reset();
-                }, 2000);
-            }, 2000);
+            // Form will submit naturally to Formspree
+            // After submission, Formspree will redirect or show thank you page
         });
 
         // Mouse movement parallax effect
@@ -1815,7 +1915,7 @@
             });
         });
 
-        // Add stagger animation to project cards on load
+        // Add stagger animation to project cards on loadyt
         document.addEventListener('DOMContentLoaded', () => {
             const projectCards = document.querySelectorAll('.project-card');
             projectCards.forEach((card, index) => {
