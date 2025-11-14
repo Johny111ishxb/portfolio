@@ -1018,6 +1018,68 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Project 10: Grammar Fix AI -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="ai web">
+                    <div class="relative h-56 bg-gradient-to-br from-green-500 to-blue-500 overflow-hidden">
+                        <img src="grammer.avif" alt="Grammar Fix AI" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/80 to-blue-500/80 hidden items-center justify-center">
+                            <i class="fas fa-spell-check text-6xl text-white"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">AI + Web</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Grammar Fix AI</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Advanced AI-powered grammar correction tool that intelligently fixes grammatical errors using Gemini API with user authentication and payment processing.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Gemini API</span>
+                            <span class="tech-tag">Firebase Auth</span>
+                            <span class="tech-tag">vercel</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://grammer-fix-ai.vercel.app/" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Try Now
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="grammar-fix-ai">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project: Pet Tracking System -->
+                <div class="project-card card-hover glass rounded-2xl overflow-hidden group" data-category="web">
+                    <div class="relative h-56 bg-gradient-to-br from-emerald-500 to-lime-500 overflow-hidden">
+                        <img src="pet.webp" alt="Pet Tracking System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/80 to-lime-500/80 hidden items-center justify-center">
+                            <i class="fas fa-paw text-6xl text-white"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">Web App</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Pet Tracking System</h3>
+                        <p class="text-slate-600 dark:text-slate-400 mb-4">Admin panel to register pets (photo, color, age, breed), mark lost to generate a QR code. Scanning the QR opens a public report page where finders submit their name, message, and location.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">phpMyAdmin</span>
+                            <span class="tech-tag">Render</span>
+                            <span class="tech-tag">QR Code</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary transition-colors text-center font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <button class="details-btn flex-1 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white py-2 px-4 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors text-center font-medium border-0 cursor-pointer" data-project="pet-tracking">
+                                <i class="fas fa-info-circle mr-2"></i>Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- View More Projects Button -->
@@ -1585,6 +1647,26 @@
                 github: 'https://github.com/Johny111ishxb/background-remover',
                 demo: 'https://backgroundremover.sallulabs.com/'
             },
+            'grammar-fix-ai': {
+                title: 'Grammar Fix AI',
+                category: 'AI + Web Application',
+                technologies: ['React', 'Gemini API', 'Firebase Authentication', 'Gumroad Payment', 'Node.js'],
+                description: 'An advanced AI-powered grammar correction tool that intelligently fixes grammatical errors, improves sentence structure, and enhances writing quality using Google\'s Gemini API. Features secure user authentication through Firebase and seamless payment processing via Gumroad for premium features.',
+                screenshot: 'ss-grammer.png',
+                challenges: 'Integrating the Gemini API for accurate grammar detection and correction while maintaining user privacy, implementing secure payment processing with Gumroad, and creating an intuitive React interface that provides real-time feedback.',
+                github: 'https://github.com/Johny111ishxb/grammar-fix-ai',
+                demo: 'https://grammer-fix-ai.vercel.app/'
+            },
+            'pet-tracking': {
+                title: 'Pet Tracking System',
+                category: 'Web Application',
+                technologies: ['PHP', 'PostgreSQL', 'phpMyAdmin', 'Render', 'QR Code'],
+                description: 'A pet management platform with an admin panel to save each pet\'s details (photo, color, age, breed). When a pet is marked as lost, the system generates a unique QR code. Scanning the QR opens a public reporting page where a finder can submit their name, message, and location.',
+                screenshot: 'ss-pet.png',
+                challenges: 'Designing a secure QR flow that maps each pet to a public report endpoint, handling geolocation inputs from users, and building an admin-friendly interface for CRUD and status updates.',
+                github: '',
+                demo: ''
+            },
 
         };
 
@@ -1738,12 +1820,16 @@
         themeToggle?.addEventListener('click', toggleTheme);
         themeToggleMobile?.addEventListener('click', toggleTheme);
 
-        // Check for saved theme preference or system preference
+        // Check for saved theme preference - defaults to light mode
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (savedTheme === 'dark') {
             html.classList.add('dark');
         } else {
+            // Default to light mode - remove dark class and set light theme
             html.classList.remove('dark');
+            if (!savedTheme) {
+                localStorage.setItem('theme', 'light');
+            }
         }
 
         // Mobile menu toggle
