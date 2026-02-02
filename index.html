@@ -45,7 +45,8 @@
     </script>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
     <meta name="theme-color" content="#050505">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -174,16 +175,11 @@
             color: var(--text-primary);
         }
 
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
+        .logo-image {
+            width: 66px;
+            height: 66px;
+            border-radius: 14px;
+            object-fit: cover;
         }
 
         .logo-text {
@@ -1492,7 +1488,7 @@
     <nav>
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <div class="logo-icon">SN</div>
+                <img src="assets/images/logo.png" alt="Salman Nawaz Logo" class="logo-image">
                 <span class="logo-text">Salman Nawaz</span>
             </a>
             <div class="nav-links">
@@ -1796,7 +1792,7 @@
             </div>
 
             <!-- Clinic Management System -->
-            <div class="project-card" data-category="web" data-title="Clinic Management System" data-desc="Complete clinic management solution for healthcare providers. Features include patient records, appointment scheduling, billing, prescription management, inventory tracking, and comprehensive reporting system." data-image="assets/images/projects/clinic.webp" data-link="#" data-tech="PHP,MySQL,Bootstrap,Chart.js,FPDF" data-screenshots="assets/images/screenshots/ss-clinic.png">
+            <div class="project-card" data-category="web" data-title="Clinic Management System" data-desc="Complete clinic management solution for healthcare providers. Features include patient records, appointment scheduling, billing, prescription management, inventory tracking, and comprehensive reporting system." data-image="assets/images/projects/clinic.webp" data-link="#" data-tech="PHP,MySQL,Bootstrap,Chart.js,FPDF" data-screenshots="assets/images/screenshots/ss-cilinic.png">
                 <img src="assets/images/projects/clinic.jpg" alt="Clinic Management" class="project-image">
                 <span class="project-tag">Healthcare</span>
                 <h3 class="project-title">Clinic Management System</h3>
@@ -1806,7 +1802,6 @@
                     <span class="tech-pill">MySQL</span>
                 </div>
                 <div class="project-links">
-                    <a href="#" class="project-link primary">View Project</a>
                     <button class="project-link secondary" onclick="openModal(this.parentElement.parentElement)"><i class="fas fa-info-circle"></i> Details</button>
                 </div>
             </div>
@@ -1983,7 +1978,7 @@
     <section id="testimonials">
         <div class="section-header">
             <span class="section-badge">Testimonials</span>
-            <h2 class="section-title">What Clients Say</h2>
+            <h2 class="section-title">User Feedback</h2>
             <p class="section-subtitle">Feedback from people I've worked with</p>
         </div>
         
